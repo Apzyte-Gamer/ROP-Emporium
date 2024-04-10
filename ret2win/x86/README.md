@@ -166,3 +166,4 @@ io.interactive()
 io.close()
 ```
 
+Running this gives us our flag!
