@@ -43,7 +43,7 @@ Reversing the Code
 
 We can now start looking at the binary. Opening pwndgb on the binary, we can list the functions:
 
-```asm
+```sh
 0x08048374  _init
 0x080483b0  read@plt
 0x080483c0  printf@plt
@@ -71,7 +71,7 @@ We can now start looking at the binary. Opening pwndgb on the binary, we can lis
 Here, we can see there are 3 functions which stand out. Disassembling the main function, we only see it calling the pwnme function.
 Disassembling the pwnme function, we can see this:
 
-```asm
+```sh
    0x080485ad <+0>:     push   ebp
    0x080485ae <+1>:     mov    ebp,esp
    0x080485b0 <+3>:     sub    esp,0x28
@@ -117,7 +117,7 @@ Disassembling the pwnme function, we can see this:
 We now have a buffer overflow scenario. Disassembling the ret2win function, we can see that the memory address `0x8048813` is calling `/bin/cat flag.txt` which is obviously where we want to return to after the overflow.
 We wont directly return to `0x8048813` tho, we have to return to `0x0804862c` which is the address of the function.
 
-```asm
+```sh
    0x0804862c <+0>:     push   ebp
    0x0804862d <+1>:     mov    ebp,esp
    0x0804862f <+3>:     sub    esp,0x8
