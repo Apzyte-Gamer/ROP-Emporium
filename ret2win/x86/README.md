@@ -69,7 +69,7 @@ We can now start looking at the binary. Opening pwndgb on the binary, we can lis
 ```
 
 Here, we can see there are 3 functions which stand out. Disassembling the main function, we only see it calling the pwnme function.
-Disassembling the pwnme function, we can see that a buffer of 0x28 (40 bytes) is being set:
+Disassembling the pwnme function, we can see this:
 
 ```
    0x080485ad <+0>:     push   ebp
@@ -78,7 +78,7 @@ Disassembling the pwnme function, we can see that a buffer of 0x28 (40 bytes) is
    0x080485b3 <+6>:     sub    esp,0x4
    0x080485b6 <+9>:     push   0x20
    0x080485b8 <+11>:    push   0x0
-   0x080485ba <+13>:    lea    eax,[ebp-0x28]     <----- 0x28 = 40
+   0x080485ba <+13>:    lea    eax,[ebp-0x28]
    0x080485bd <+16>:    push   eax
    0x080485be <+17>:    call   0x8048410 <memset@plt>
    0x080485c3 <+22>:    add    esp,0x10
