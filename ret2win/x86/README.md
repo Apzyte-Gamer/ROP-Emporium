@@ -136,6 +136,46 @@ We wont directly return to `0x8048813` tho, we have to return to `0x0804862c` wh
 
 Lastly, we can confirm the offset by the inbuilt `cyclic` command which comes out to be `44`.
 
+```asm
+pwndbg> run
+Starting program: /home/syntax-soup/Desktop/ROP Emporium/ret2win/32-bits/ret2win32 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+ret2win by ROP Emporium
+x86
+
+For my first trick, I will attempt to fit 56 bytes of user input into 32 bytes of stack buffer!
+What could possibly go wrong?
+You there, may I have your input please? And don't worry about null bytes, we're using read()!
+
+> aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaa
+Thank you!
+
+Program received signal SIGSEGV, Segmentation fault.
+0x6161616c in ?? ()
+LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA
+────────────────────────────────────────────────────────[ REGISTERS / show-flags off / show-compact-regs off ]────────────────────────────────────────────────────────
+*EAX  0xb
+*EBX  0xf7e1dff4 (_GLOBAL_OFFSET_TABLE_) ◂— 0x21dd8c
+*ECX  0xf7e1f9b8 (_IO_stdfile_1_lock) ◂— 0x0
+ EDX  0x0
+*EDI  0xf7ffcba0 (_rtld_global_ro) ◂— 0x0
+*ESI  0x8048660 (__libc_csu_init) ◂— push ebp
+*EBP  0x6161616b ('kaaa')
+*ESP  0xffffcea0 ◂— 'maaanaaa'
+*EIP  0x6161616c ('laaa')
+```
+
+Then by using this:
+
+```asm
+pwndbg> cyclic -l laaa
+Finding cyclic pattern of 4 bytes: b'laaa' (hex: 0x6c616161)
+Found at offset 44
+```
+
+we get our offset!
+
 Now, we have all we need for our ret2win.
 
 Exploiting the Binary
